@@ -20,7 +20,9 @@ require "sprockets/railtie"
 Bundler.require(*Rails.groups)
 
 module ExchangerateHostExample
+  SUPPORTED_SERVICES = [:latest_rates, :convert_currency, :historical_rates, :time_series, :fluctuation, :supported_symbols].freeze
   class Application < Rails::Application
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
 
