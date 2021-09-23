@@ -6,6 +6,19 @@
 import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import 'bootstrap'
+import 'select2'
+import 'select2/dist/css/select2.css'
+import 'select2-bootstrap-theme/dist/select2-bootstrap'
 
 Rails.start()
 Turbolinks.start()
+
+$(document).on("turbolinks:before-cache", function() {
+  $('.multi-select').select2('destroy')
+})
+
+$(document).on('turbolinks:load', function() {
+  $('.multi-select').select2({
+    theme: 'bootstrap'
+  })
+})
