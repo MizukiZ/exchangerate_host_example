@@ -1,5 +1,7 @@
-<ul class="list-group list-group-flush">
-  <% ExchangerateHostExample::SUPPORTED_SERVICES.each do |service| %>
-    <li class="text-center list-group-item p-3"><%= link_to service.to_s.humanize, send("#{service}_url"), class: 'text-decoration-none' %></li>
-  <% end %>
-</ul>
+<div class=container>
+  <ul class="list-group list-group-flush">
+    <% ExchangerateHostExample::SUPPORTED_SERVICES.each do |service| %>
+      <li class="text-center list-group-item p-3"><%= link_to service.to_s.humanize, send("#{service}_url"), class: 'text-decoration-none' %></li>
+    <% end %>
+  </ul>
+</div>
