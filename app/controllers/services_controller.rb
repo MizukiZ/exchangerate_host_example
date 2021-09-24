@@ -26,6 +26,15 @@ class ServicesController < ApplicationController
   end
 
   def historical_rates
+    if searched?
+      @historical_rates_options = service_params.to_h.symbolize_keys || {}
+      @historical_rates = ExchangerateHost.historical_rates(@historical_rates_options)
+    end
+
+    @date_value = service_params[:date] || ExchangerateHost.configurations.date
+    @base_value = service_params[:base] || ExchangerateHost.configurations.base || :EUR
+    @symbols_value = service_params[:symbols] || ExchangerateHost.configurations.symbols
+    @amount_value = service_params[:amount] || ExchangerateHost.configurations.amount
   end
 
   def time_series
