@@ -1,3 +1,15 @@
 <%= render layout: "layouts/service_card" do %>
+  <%= form_with url: convert_currency_url, method: :get do |form| %>
+    Date: <%= form.date_field :date, value: @date_value, class: 'form-select', max: Date.today %>
+    From: <%= form.select :from, options_for_select(available_currencies, @from_value), {}, class: 'form-select' %>
+    To: <%= form.select :to, options_for_select(available_currencies, @to_value), {}, class: 'form-select' %>
+    Amount: <%= form.number_field :amount, value: @amount_value || 1, class: 'form-control', step: 0.1, min: 1 %>
+    <%= form.submit "Search", class: 'btn btn-primary mt-3' %>
+  <% end %>
+
+  <% if @convert_currency%>
+  <h4 class="mt-3">Result</h4>
+  <%= @convert_currency.dig('result') %>
+  <% end %>
 
 <% end %>
