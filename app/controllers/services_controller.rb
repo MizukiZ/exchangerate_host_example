@@ -42,6 +42,7 @@ class ServicesController < ApplicationController
       params.permit(:base, :amount, :date, :from, :to, symbols: [])
       .tap do |sp|
         sp[:amount] = sp[:amount].to_f if sp[:amount]
+        sp[:date] = Time.now.strftime('%Y-%m-%d') if searched? && sp[:date].blank?
       end.compact_blank!
     end
 

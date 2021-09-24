@@ -1,0 +1,1 @@
+Currencies: <%= f.select :symbols, options_for_select(available_currencies, @symbols_value), {include_hidden: false}, multiple: true, class: 'multi-select form-select' %>

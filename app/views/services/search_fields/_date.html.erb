@@ -1,0 +1,1 @@
+<%= type.to_s.humanize %>: <%= f.date_field type, value: instance_variable_get("@#{type}_value"), class: 'form-select', max: Date.today %>
