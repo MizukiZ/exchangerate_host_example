@@ -1,5 +1,9 @@
 <%= render "layouts/service_card" do %>
-  <%= render "services/search_filter", fields: [:base, :currencies, :amount]  %>
+  <%= render "services/search_filter", fields: [
+    {type: :currency, sub_type: :base},
+    {type: :currencies},
+    {type: :amount}
+    ]  %>
 
   <% if @latest_rates%>
     <h4 class="mt-3"><%= "Rates on #{@latest_rates['date']}:" %></h4>

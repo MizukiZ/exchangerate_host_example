@@ -1,3 +1,13 @@
 <%= render layout: "layouts/service_card" do %>
+    <%= render "services/search_filter", fields: [
+    {type: :date, sub_type: :start_date},
+    {type: :date, sub_type: :end_date},
+    {type: :currency, sub_type: :base},
+    {type: :currency, sub_type: :target},
+    {type: :amount}
+    ]  %>
 
+  <% if @time_series%>
+    <%= line_chart @chart_data, points: false, min: @smallest_value %>
+  <% end %>
 <% end %>

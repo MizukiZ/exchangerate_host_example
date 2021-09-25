@@ -1,5 +1,10 @@
 <%= render "layouts/service_card" do %>
-  <%= render "services/search_filter", fields: [:date, :from, :to, :amount]  %>
+  <%= render "services/search_filter", fields: [
+    {type: :date, sub_type: :date},
+    {type: :currency, sub_type: :from},
+    {type: :currency, sub_type: :to},
+    {type: :amount},
+    ]  %>
 
   <% if @convert_currency%>
   <h4 class="mt-3">Result</h4>

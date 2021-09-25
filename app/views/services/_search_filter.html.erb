@@ -1,12 +1,6 @@
   <%= form_with url: send("#{controller.action_name}_url"), method: :get do |f| %>
     <% fields.each do |field| %>
-      <% if [:base, :from, :to].include?(field) %>
-        <%= render "services/search_fields/currency", type: field, f: f %>
-      <% elsif [:date, :start_date, :end_date].include?(field) %>
-        <%= render "services/search_fields/date", type: field, f: f %>
-      <% else %>
-        <%= render "services/search_fields/#{field}", f: f %>
-      <% end %>
+      <%= render "services/search_fields/#{field[:type]}", type: field[:sub_type], f: f %>
     <% end %>
 
     <%= f.submit "Search", class: 'btn btn-primary mt-3' %>

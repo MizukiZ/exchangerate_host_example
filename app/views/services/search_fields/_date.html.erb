@@ -1,1 +1,8 @@
-<%= type.to_s.humanize %>: <%= f.date_field type, value: instance_variable_get("@#{type}_value"), class: 'form-select', max: Date.today %>
+<%= type.to_s.humanize %>: 
+<%= 
+  f.date_field type, 
+  value: instance_variable_get("@#{type}_value"),
+  class: 'form-select',
+  min: type == :start_date ? 1.year.ago.strftime('%Y-%m-%d') : nil,
+  max: Date.today
+  %>

@@ -1,1 +1,1 @@
-<%= type.to_s.humanize %>: <%= f.select type, options_for_select(available_currencies, instance_variable_get("@#{type}_value")), {}, class: 'form-select' %>
+<%= type.to_s.humanize %>: <%= f.select type, options_for_select(available_currencies, instance_variable_get("@#{type}_value") || :EUR), {}, class: 'form-select' %>
