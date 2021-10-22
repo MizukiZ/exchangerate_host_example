@@ -1,3 +1,35 @@
 <%= render layout: "layouts/service_card" do %>
+    <%= render "services/search_filter", fields: [
+    {type: :date, sub_type: :start_date},
+    {type: :date, sub_type: :end_date},
+    {type: :currency, sub_type: :base},
+    {type: :currencies, sub_type: :symbols},
+    {type: :amount}
+    ]  %>
+
+   <% if @fluctuation %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Curency</th>
+          <th scope="col">Start Rate</th>
+          <th scope="col">End Rate</th>
+          <th scope="col">Change</th>
+          <th scope="col">Change(%)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @fluctuation['rates'].each do |currency, rate| %>
+          <tr>
+            <td><%= currency %></td>
+            <td><%= rate['start_rate'] %></td>
+            <td><%= rate['end_rate'] %></td>
+            <td><%= rate['change'] %></td>
+            <td><%= (rate['change_pct'] || 0) * 100 %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
 
 <% end %>

@@ -46,8 +46,10 @@ class ServicesController < ApplicationController
       @time_series_options[:symbols] = Array.wrap(target) # convert the target to array and assign it to symbols
 
       @time_series = ExchangerateHost.time_series(@time_series_options)
+
       @chart_data = @time_series['rates'].map { |date, rates|
         value = rates[target]
+        next if value.blank?
         @smallest_value ||= value
         @smallest_value = value if value < @smallest_value
 
@@ -63,6 +65,16 @@ class ServicesController < ApplicationController
   end
 
   def fluctuation
+    if searched?
+      @fluctuation_options = service_params.to_h.symbolize_keys || {}
+      @fluctuation = ExchangerateHost.fluctuation(@fluctuation_options)
+    end
+
+    @start_date_value = service_params[:start_date] || ExchangerateHost.configurations.start_date
+    @end_date_value = service_params[:end_date] || ExchangerateHost.configurations.end_date
+    @base_value = service_params[:base] || ExchangerateHost.configurations.base
+    @symbols_value = service_params[:symbols] || ExchangerateHost.configurations.symbols
+    @amount_value = service_params[:amount] || ExchangerateHost.configurations.amount
   end
 
   def supported_symbols
