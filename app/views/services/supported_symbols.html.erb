@@ -1,3 +1,18 @@
 <%= render layout: "layouts/service_card" do %>
-
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Currency code</th>
+        <th scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @supported_symbols['symbols'].each do |currency, data| %>
+        <tr>
+          <td><%= data['code'] %></td>
+          <td><%= data['description'] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>

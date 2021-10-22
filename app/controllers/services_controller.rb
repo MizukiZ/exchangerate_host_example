@@ -78,6 +78,7 @@ class ServicesController < ApplicationController
   end
 
   def supported_symbols
+    @supported_symbols = ExchangerateHost.supported_symbols
   end
 
   private
