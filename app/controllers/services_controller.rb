@@ -8,9 +8,7 @@ class ServicesController < ApplicationController
       @latest_rates = ExchangerateHost.latest_rates(@latest_rates_options)
     end
 
-    @base_value = service_params[:base] || ExchangerateHost.configurations.base || :EUR
-    @symbols_value = service_params[:symbols] || ExchangerateHost.configurations.symbols
-    @amount_value = service_params[:amount] || ExchangerateHost.configurations.amount
+    set_values([:base, :symbols, :amount])
   end
 
   def convert_currency
@@ -19,10 +17,7 @@ class ServicesController < ApplicationController
       @convert_currency = ExchangerateHost.convert_currency(@convert_currency_options)
     end
 
-    @date_value = service_params[:date] || ExchangerateHost.configurations.date
-    @from_value = service_params[:from] || ExchangerateHost.configurations.from
-    @to_value = service_params[:to] || ExchangerateHost.configurations.to
-    @amount_value = service_params[:amount] || ExchangerateHost.configurations.amount
+    set_values([:date, :from, :to, :amount])
   end
 
   def historical_rates
@@ -31,10 +26,7 @@ class ServicesController < ApplicationController
       @historical_rates = ExchangerateHost.historical_rates(@historical_rates_options)
     end
 
-    @date_value = service_params[:date] || ExchangerateHost.configurations.date
-    @base_value = service_params[:base] || ExchangerateHost.configurations.base
-    @symbols_value = service_params[:symbols] || ExchangerateHost.configurations.symbols
-    @amount_value = service_params[:amount] || ExchangerateHost.configurations.amount
+    set_values([:date, :base, :symbols, :amount])
   end
 
   def time_series
@@ -57,11 +49,8 @@ class ServicesController < ApplicationController
       }
     end
 
-    @start_date_value = service_params[:start_date] || ExchangerateHost.configurations.start_date
-    @end_date_value = service_params[:end_date] || ExchangerateHost.configurations.end_date
-    @base_value = service_params[:base] || ExchangerateHost.configurations.base
+    set_values([:start_date, :end_date, :base, :amount])
     @target_value = service_params[:target]
-    @amount_value = service_params[:amount] || ExchangerateHost.configurations.amount
   end
 
   def fluctuation
@@ -70,11 +59,7 @@ class ServicesController < ApplicationController
       @fluctuation = ExchangerateHost.fluctuation(@fluctuation_options)
     end
 
-    @start_date_value = service_params[:start_date] || ExchangerateHost.configurations.start_date
-    @end_date_value = service_params[:end_date] || ExchangerateHost.configurations.end_date
-    @base_value = service_params[:base] || ExchangerateHost.configurations.base
-    @symbols_value = service_params[:symbols] || ExchangerateHost.configurations.symbols
-    @amount_value = service_params[:amount] || ExchangerateHost.configurations.amount
+    set_values([:start_date, :end_date, :base, :symbols, :amount])
   end
 
   def supported_symbols
@@ -95,5 +80,16 @@ class ServicesController < ApplicationController
     def searched?
       # check if search redirect
       params[:commit] == 'Search'
+    end
+
+    def set_values(keys)
+      keys.each do |key|
+        value = selected_or_default_value(key)
+        instance_variable_set("@#{key}_value", value)
+      end
+    end
+
+    def selected_or_default_value(key)
+      service_params[key] || ExchangerateHost.configurations.public_send(key)
     end
 end
